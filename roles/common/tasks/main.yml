@@ -1,0 +1,8 @@
+- include_tasks: basic.yml
+- include_tasks: mc.yml
+- include_tasks: ssh.yml
+- include_tasks: git.yml
+- include_tasks: mysql.yml
+- include_tasks: php.yml
+- include_tasks: im.yml
+- include_tasks: pure-ftpd.yml

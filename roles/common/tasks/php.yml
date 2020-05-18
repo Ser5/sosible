@@ -1,0 +1,37 @@
+- name:   Install PHP
+  become: yes
+  apt:
+    name: [
+      php,
+      php-mbstring, php-curl, php-gd, php-zip, php-intl, php-xml, php-xmlrpc,
+      php-mysql, php-mongodb, php-redis,
+      php-igbinary, php-gmp, php-xdebug,
+      php-fpm,
+      composer
+    ]
+    state: present
+
+- name:   Create custom PHP config
+  become: yes
+  copy:
+    content: |
+      short_open_tag      = On
+      realpath_cache_size = 4096k
+      post_max_size       = "{{ p.php.config.post_max_size }}"
+      upload_max_filesize = "{{ p.php.config.post_max_size }}"
+      default_charset     = "{{ p.php.config.default_charset }}"
+    dest: /etc/php/custom.ini
+
+- name:   Create symlinks to custom PHP config
+  become: yes
+  file:
+    src:   /etc/php/custom.ini
+    dest:  "/etc/php/{{ p.php.version }}/{{ item }}/conf.d/99-custom.ini"
+    state: link
+  loop: ['fpm', 'cli']
+
+- name:   Restart php-fpm
+  become: yes
+  service:
+    name:  "php{{ p.php.version }}-fpm"
+    state: restarted

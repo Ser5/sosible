@@ -1,0 +1,9 @@
+- name:   Configure MySQL
+  become: yes
+  ini_file:
+    path:    "{{ p.mysql.config_path }}"
+    section: mysqld
+    option:  "{{ item.key }}"
+    value:   "{{ item.value }}"
+  loop:
+    "{{ p.mysql.config | dict2items }}"

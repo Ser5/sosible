@@ -1,0 +1,35 @@
+- name:   Keep SSH_AUTH_SOCK
+  become: yes
+  lineinfile:
+    path:        /etc/sudoers
+    insertafter: ^Defaults
+    line:        "Defaults\tenv_keep+=SSH_AUTH_SOCK"
+    state:       present
+    validate:    '/usr/sbin/visudo -c'
+
+- name:   Configure sshd_config
+  become: yes
+  lineinfile:
+    path:  /etc/ssh/sshd_config
+    regex: "{{ item.regex }}"
+    line:  "{{ item.line }}"
+  loop:
+    - {regex: '^#?PermitRootLogin',        line: 'PermitRootLogin prohibit-password'}
+    - {regex: '^#?MaxAuthTries',           line: 'MaxAuthTries 10'}
+    - {regex: '^#?PasswordAuthentication', line: "PasswordAuthentication {{ p.ssh.password_authentication | default(no) }}"}
+    - {regex: '^#?AllowAgentForwarding',   line: 'AllowAgentForwarding yes'}
+
+- name:   Configure ssh_config
+  become: yes
+  lineinfile:
+    path:  /etc/ssh/ssh_config
+    regex: "{{ item.regex }}"
+    line:  "{{ item.line }}"
+  loop:
+    - {regex: '^#?\s*ForwardAgent', line: '   ForwardAgent yes'}
+
+- name:   Restart SSH
+  become: yes
+  service:
+    name:  ssh
+    state: restarted

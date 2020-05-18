@@ -1,0 +1,4 @@
+- name: Run
+  hosts: localhost
+  roles:
+    - common

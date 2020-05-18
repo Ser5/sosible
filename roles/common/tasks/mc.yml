@@ -1,0 +1,42 @@
+- name:   Install MC
+  become: yes
+  apt:
+    name:  mc
+    state: present
+
+- name: 'Configure MC ini [mc]'
+  ini_file:
+    path:    ~/.config/mc/ini
+    section: 'Midnight-Commander'
+    option:  "{{ item.option }}"
+    value:   "{{ item.value }}"
+  loop:
+    - {option: 'auto_save_setup',                    value: 'true'}
+    - {option: 'use_internal_view',                  value: 'true'}
+    - {option: 'editor_return_does_auto_indent',     value: 'true'}
+    - {option: 'editor_fake_half_tabs',              value: 'false'}
+    - {option: 'editor_cursor_after_inserted_block', value: 'true'}
+    - {option: 'editor_ask_filename_before_edit',    value: 'true'}
+
+- name: 'Configure MC ini [Panels]'
+  ini_file:
+    path:    ~/.config/mc/ini
+    section: Panels
+    option:  auto_save_setup_panels
+    value:   'true'
+
+- name: Configure MC hotlist
+  lineinfile:
+    path:   ~/.config/mc/hotlist
+    regexp: '^ENTRY "{{ item.url }}"'
+    line:   'ENTRY "{{ item.url }}" URL "{{ item.url }}"'
+  loop:
+    - {url: '/var/www/'}
+    - {url: '/etc/'}
+    - {url: '/etc/php/'}
+    - {url: '/etc/apache2/'}
+    - {url: '/etc/nginx/'}
+    - {url: '/etc/mysql/'}
+    - {url: '/etc/pure-ftpd/'}
+    - {url: '/var/log/'}
+    - {url: '/tmp/'}

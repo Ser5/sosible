@@ -1,0 +1,35 @@
+p:
+  ssh:
+    password_authentication: 'yes'
+  php:
+    version:  '7.4'
+    dir_path: /etc/php/7.4/
+    config:
+      post_max_size:   '32M'
+      default_charset: '""'
+  mysql:
+    config_path: /etc/mysql/mariadb.conf.d/50-server.cnf
+    config:
+      #Выключаем отголоски прошлого
+      query_cache_size:               '0'
+      #На серверах с малым количеством памяти включение настройки даст выжирание памяти в говнину
+      performance_schema:             '0'
+      #На каждую таблицу по одному файлу. Если так не указывать - будет жрать место на винте.
+      innodb_file_per_table:          '1'
+      #На продакшоне якобы лучше ставить в 70-80% доступной памяти сервера - там кэш всех данных и индексов
+      innodb_buffer_pool_size:        '128M'
+      #На каждый гигобайт innodb_buffer_pool_size делаем по одному буферу
+      innodb_buffer_pool_instances:   '1'
+      #Это лог операций. Чем больше размер лога - тем быстрее работает БД.
+      #Файлов лога два - соответственно на диске нужно (2 * innodb_log_file_size) места.
+      innodb_log_file_size:           '512M'
+      #Размер буфера незакоммиченных транзакций. Вполне хватит стандартного 1 МБ.
+      #Поднимать имеет смысл если используются толстые TEXT и BLOB.
+      innodb_log_buffer_size:         '1M'
+      #1 - тормоза и надёжность.
+      #2 - летает и небольшая вероятность потери данных.
+      innodb_flush_log_at_trx_commit: '2'
+  git:
+    user:
+      name:  Ser5
+      email: mail@example.com
