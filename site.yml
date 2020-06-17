@@ -2,3 +2,5 @@
   hosts: localhost
   roles:
     - common
+
+#clear && ansible-playbook site.yml --check --diff --extra-vars='@host_vars/jaam.yml'
