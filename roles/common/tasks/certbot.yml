@@ -1,0 +1,22 @@
+- name:   Install certbot with python 3
+  become: yes
+  when:   p.certbot.install
+  apt:
+    name: [python3-pip, python3-certbot-nginx, certbot]
+    state: present
+
+- name:   Install certbot-regru
+  become: yes
+  when:   p.certbot.regru
+  pip:
+    name: certbot-regru
+
+- name:   chmod 0600 /etc/letsencrypt/regru.ini
+  become: yes
+  when:   p.certbot.regru
+  file:
+    path:  /etc/letsencrypt/regru.ini
+    state: touch
+    owner: root
+    group: root
+    mode:  '0600'

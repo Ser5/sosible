@@ -16,3 +16,6 @@ p:
     user:
       name:  Jaam
       email: mail@example.com
+  certbot:
+    install: yes
+    regru:   yes

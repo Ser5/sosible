@@ -33,3 +33,6 @@ p:
     user:
       name:  Ser5
       email: mail@example.com
+  certbot:
+    install: no
+    regru:   no
