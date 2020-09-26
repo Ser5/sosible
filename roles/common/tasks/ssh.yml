@@ -4,6 +4,7 @@
   block:
     - name: Keep SSH_AUTH_SOCK
       lineinfile:
+        create:      yes
         path:        /etc/sudoers
         insertafter: ^Defaults
         line:        "Defaults\tenv_keep+=SSH_AUTH_SOCK"
@@ -12,9 +13,10 @@
 
     - name: Configure sshd_config
       lineinfile:
-        path:  /etc/ssh/sshd_config
-        regex: "{{ item.regex }}"
-        line:  "{{ item.line }}"
+        create: yes
+        path:   /etc/ssh/sshd_config
+        regex:  "{{ item.regex }}"
+        line:   "{{ item.line }}"
       loop:
         - {regex: '^#?PermitRootLogin',        line: 'PermitRootLogin prohibit-password'}
         - {regex: '^#?MaxAuthTries',           line: 'MaxAuthTries 10'}
@@ -23,9 +25,10 @@
 
     - name: Configure ssh_config
       lineinfile:
-        path:  /etc/ssh/ssh_config
-        regex: "{{ item.regex }}"
-        line:  "{{ item.line }}"
+        create: yes
+        path:   /etc/ssh/ssh_config
+        regex:  "{{ item.regex }}"
+        line:   "{{ item.line }}"
       loop:
         - {regex: '^#?\s*ForwardAgent', line: '   ForwardAgent yes'}
 

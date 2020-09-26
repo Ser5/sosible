@@ -30,6 +30,7 @@
 
     - name: Configure MC hotlist
       lineinfile:
+        create: yes
         path:   ~/.config/mc/hotlist
         regexp: '^ENTRY "{{ item.url }}"'
         line:   'ENTRY "{{ item.url }}" URL "{{ item.url }}"'
