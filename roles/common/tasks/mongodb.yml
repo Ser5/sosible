@@ -1,0 +1,6 @@
+- name:   Install MongoDB
+  become: yes
+  tags:   mongodb
+  apt:
+    name:  [mongodb, php-mongodb]
+    state: present

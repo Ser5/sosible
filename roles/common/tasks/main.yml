@@ -4,7 +4,9 @@
 - import_tasks: git.yml
 - import_tasks: nginx.yml
 - import_tasks: mysql.yml
+- import_tasks: mongodb.yml
 - import_tasks: php.yml
 - import_tasks: im.yml
+- import_tasks: nodejs.yml
 - import_tasks: pure-ftpd.yml
 - import_tasks: certbot.yml
