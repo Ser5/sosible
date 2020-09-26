@@ -1,10 +1,12 @@
 - name:   Install Git
   become: yes
+  tags:   git
   apt:
     name:  git
     state: present
 
 - name: Configure Git
+  tags: git
   ini_file:
     path:    ~/.gitconfig
     section: "{{ item.section }}"
@@ -27,8 +29,11 @@
     - {section: 'alias', option: 'copl',     value: '!git co $1 && git pull'}
     - {section: 'alias', option: 'com',      value: '!branchName=`git st | grep "%23 On branch" | sed "s/%23 On branch //"` && git copl $1 && git merge $branchName'}
     - {section: 'alias', option: 'l1',       value: 'log -n1'}
+    - {section: 'alias', option: 'l2',       value: 'log -n2'}
     - {section: 'alias', option: 'l3',       value: 'log -n3'}
+    - {section: 'alias', option: 'l4',       value: 'log -n4'}
     - {section: 'alias', option: 'l5',       value: 'log -n5'}
+    - {section: 'alias', option: 'l6',       value: 'log -n6'}
     - {section: 'alias', option: 'l7',       value: 'log -n7'}
     - {section: 'alias', option: 'sm',       value: 'submodule'}
     - {section: 'alias', option: 'smu',      value: '!git submodule foreach git pull'}

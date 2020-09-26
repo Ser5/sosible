@@ -1,54 +1,50 @@
-- name:   Install pure-ftpd
+- name:   pure-ftpd
   become: yes
-  apt:
-    name:  pure-ftpd
-    state: present
+  tags:   pure-ftpd
+  block:
+    - name: Install pure-ftpd
+      apt:
+        name:  pure-ftpd
+        state: present
 
-- name:   Enable pure-ftpd
-  become: yes
-  service:
-    name:    pure-ftpd
-    enabled: yes
+    - name:   Enable pure-ftpd
+      service:
+        name:    pure-ftpd
+        enabled: yes
 
-- name:   Configure pure-ftpd
-  become: yes
-  copy:
-    content: "{{ item.value }}"
-    dest:    "/etc/pure-ftpd/conf/{{ item.name }}"
-  loop:
-    - {name: 'ChrootEveryone',     value: 'yes'}
-    - {name: 'NoAnonymous',        value: 'yes'}
-    - {name: 'PAMAuthentication',  value: 'no'}
-    - {name: 'UnixAuthentication', value: 'no'}
-    - {name: 'PureDB',             value: '/etc/pure-ftpd/pureftpd.pdb'}
+    - name: Configure pure-ftpd
+      copy:
+        content: "{{ item.value }}"
+        dest:    "/etc/pure-ftpd/conf/{{ item.name }}"
+      loop:
+        - {name: 'ChrootEveryone',     value: 'yes'}
+        - {name: 'NoAnonymous',        value: 'yes'}
+        - {name: 'PAMAuthentication',  value: 'no'}
+        - {name: 'UnixAuthentication', value: 'no'}
+        - {name: 'PureDB',             value: '/etc/pure-ftpd/pureftpd.pdb'}
 
-- name:   Create pure auth symlink
-  become: yes
-  file:
-    src:   /etc/pure-ftpd/conf/PureDB
-    dest:  /etc/pure-ftpd/auth/50pure
-    state: link
+    - name: Create pure auth symlink
+      file:
+        src:   /etc/pure-ftpd/conf/PureDB
+        dest:  /etc/pure-ftpd/auth/50pure
+        state: link
 
-- name:   Delete other auths
-  become: yes
-  file:
-    path:  "/etc/pure-ftpd/auth/{{ item }}"
-    state: absent
-  loop: [65unix, 70pam]
+    - name: Delete other auths
+      file:
+        path:  "/etc/pure-ftpd/auth/{{ item }}"
+        state: absent
+      loop: [65unix, 70pam]
 
-- name:   Stat conf
-  become: yes
-  stat:
-    path: /etc/pure-ftpd/pure-ftpd.conf
-  register: conf_file
+    - name: Stat conf
+      stat:
+        path: /etc/pure-ftpd/pure-ftpd.conf
+      register: conf_file
 
-- name:      Deactivate conf
-  become: yes
-  command: mv /etc/pure-ftpd/pure-ftpd.conf /etc/pure-ftpd/_pure-ftpd.conf
-  when:    conf_file.stat.exists
+    - name:    Deactivate conf
+      command: mv /etc/pure-ftpd/pure-ftpd.conf /etc/pure-ftpd/_pure-ftpd.conf
+      when:    conf_file.stat.exists
 
-- name:   Restart pure-ftpd
-  become: yes
-  service:
-    name:  pure-ftpd
-    state: restarted
+    - name: Restart pure-ftpd
+      service:
+        name:  pure-ftpd
+        state: restarted

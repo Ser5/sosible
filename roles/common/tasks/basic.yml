@@ -1,5 +1,6 @@
-- name: Install basic apps
+- name:   Install basic apps
   become: yes
+  tags:   basic
   apt:
     name: [acl, ftp, curl, ntp, screen, vim]
     state: present

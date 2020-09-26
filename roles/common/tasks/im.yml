@@ -1,17 +1,19 @@
-- name:   Install ImageMagick
+- name:   ImageMagick
   become: yes
-  apt:
-    name:  imagemagick
-    state: present
+  tags:   im
+  block:
+    - name:   Install ImageMagick
+      apt:
+        name:  imagemagick
+        state: present
 
-- name:   Configure ImageMagick
-  become: yes
-  xml:
-    path:  /etc/ImageMagick-6/policy.xml
-    xpath: "/policymap/policy[{{ item.selector }}]"
-    attribute: value
-    value: "{{ item.value }}"
-  loop:
-    - {selector: '@domain="resource" and @name="width"',  value: '16KP'}
-    - {selector: '@domain="resource" and @name="height"', value: '16KP'}
-    - {selector: '@domain="path" and @pattern="@*"',      value: 'read'}
+    - name:   Configure ImageMagick
+      xml:
+        path:  /etc/ImageMagick-6/policy.xml
+        xpath: "/policymap/policy[{{ item.selector }}]"
+        attribute: value
+        value: "{{ item.value }}"
+      loop:
+        - {selector: '@domain="resource" and @name="width"',  value: '16KP'}
+        - {selector: '@domain="resource" and @name="height"', value: '16KP'}
+        - {selector: '@domain="path" and @pattern="@*"',      value: 'read'}
