@@ -4,8 +4,8 @@
   block:
     - name: Install Node.js
       apt:
-        name:  nodejs
+        name:  [nodejs, npm]
         state: present
 
     - name:    Update npm
-      command: npm install npm@latest -g
+      command: 'npm install npm@latest -g'
