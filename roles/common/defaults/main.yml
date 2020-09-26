@@ -8,6 +8,9 @@ p:
       post_max_size:   '32M'
       default_charset: '""'
   mysql:
+    packages:
+      - mariadb-server
+      - mariadb-client
     config_path: /etc/mysql/mariadb.conf.d/50-server.cnf
     config:
       #Выключаем отголоски прошлого

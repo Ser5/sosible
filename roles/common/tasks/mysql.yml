@@ -1,10 +1,19 @@
-- name:   Configure MySQL
+- name:   MySQL
   become: yes
   tags:   mysql
-  ini_file:
-    path:    "{{ p.mysql.config_path }}"
-    section: mysqld
-    option:  "{{ item.key }}"
-    value:   "{{ item.value }}"
-  loop:
-    "{{ p.mysql.config | dict2items }}"
+  block:
+    - name: Install MySQL
+      apt:
+        name:  "{{ item }}"
+        state: present
+      loop:
+        "{{ p.mysql.packages }}"
+
+    - name: Configure MySQL
+      ini_file:
+        path:    "{{ p.mysql.config_path }}"
+        section: mysqld
+        option:  "{{ item.key }}"
+        value:   "{{ item.value }}"
+      loop:
+        "{{ p.mysql.config | dict2items }}"
