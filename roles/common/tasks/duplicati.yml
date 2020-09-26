@@ -1,0 +1,60 @@
+- name:   Duplicati
+  become: yes
+  tags:   duplicati
+  block:
+    - name: Add Mono GPG key
+      tags: mono
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id:        3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+
+    - name: Add APT Mono repository
+      tags: mono
+      apt_repository:
+        repo:         deb https://download.mono-project.com/repo/ubuntu stable-focal main
+        state:        present
+        update_cache: yes
+
+    - name: Install Mono
+      tags: mono
+      apt:
+        name:  mono-devel
+        state: present
+
+    - name: Install Duplicati
+      tags: duplicati-package
+      apt:
+        deb: "https://updates.duplicati.com/beta/duplicati_{{ p.duplicati.version }}_all.deb"
+
+    - name: Create Duplicati service
+      tags: duplicati-service
+      template:
+        src:  duplicati.service
+        dest: /etc/systemd/system/duplicati.service
+
+    - name: Create Duplicati config
+      tags: duplicati-service
+      template:
+        src:  duplicati_env
+        dest: /etc/default/duplicati
+
+    - name: daemon-reload
+      tags: duplicati-service
+      systemd:
+        daemon_reload: yes
+
+    - name: Enable Duplicati service
+      tags: duplicati-service
+      service:
+        name:    duplicati
+        enabled: yes
+
+    - name: Start Duplicati service
+      tags: duplicati-service
+      service:
+        name:  duplicati
+        state: started
+
+    - name:  Check Duplicati service
+      tags: duplicati-service
+      shell: service duplicati status

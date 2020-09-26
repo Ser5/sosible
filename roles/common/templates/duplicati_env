@@ -1,0 +1,1 @@
+DAEMON_OPTS="--webservice-interface=any --webservice-port=8200 --portable-mode"
