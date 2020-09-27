@@ -15,14 +15,8 @@
         state: present
 
     - name: Create custom PHP config
-      copy:
-        content: |
-          short_open_tag      = On
-          realpath_cache_size = 4096k
-          post_max_size       = "{{ p.php.config.post_max_size }}"
-          upload_max_filesize = "{{ p.php.config.post_max_size }}"
-          default_charset     = "{{ p.php.config.default_charset }}"
-          sendmail_path       = "{{ p.php.config.sendmail_path }}"
+      temmplate:
+        src:  php.ini
         dest: /etc/php/custom.ini
 
     - name: Create symlinks to custom PHP config

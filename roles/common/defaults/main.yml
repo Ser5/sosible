@@ -8,6 +8,11 @@ p:
       post_max_size:   '32M'
       default_charset: ''
       sendmail_path:   '/usr/sbin/exim4 -t'
+      opcache:
+        enable:               0
+        enable_cli:           0
+        revalidate_freq:      0
+        enable_file_override: 0
   mysql:
     packages:
       - mariadb-server
