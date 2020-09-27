@@ -15,7 +15,7 @@
         state: present
 
     - name: Create custom PHP config
-      temmplate:
+      template:
         src:  php.ini
         dest: /etc/php/custom.ini
 
