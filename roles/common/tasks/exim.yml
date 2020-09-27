@@ -1,0 +1,43 @@
+- name:   Exim
+  become: yes
+  tags:   exim
+  block:
+    - name: Disable sendmail
+      service:
+        name:    sendmail
+        state:   stopped
+        enabled: no
+
+    - name: Install Exim
+      apt:
+        name:  [exim4, exim4-config]
+        state: present
+
+    - name: Configure Exim
+      lineinfile:
+        path:   /etc/exim4/update-exim4.conf.conf
+        regexp: "^{{ item.key }}="
+        line:   "{{ item.key }}='{{ item.value }}'"
+        state:  present
+      loop: "{{ data | dict2items }}"
+      vars:
+        data:
+          - dc_eximconfig_configtype: 'internet'
+          - dc_other_hostnames:       ''
+          - dc_local_interfaces:      '127.0.0.1 ; ::1'
+          - dc_readhost:              ''
+          - dc_relay_domains:         ''
+          - dc_minimaldns:            'false'
+          - dc_relay_nets:            ''
+          - dc_smarthost:             ''
+          - CFILEMODE:                '644'
+          - dc_use_split_config:      'false'
+          - dc_hide_mailname:         ''
+          - dc_mailname_in_oh:        'true'
+          - dc_localdelivery:         'mail_spool'
+
+    - name: Enable Exim
+      service:
+        name:    exim4
+        state:   started
+        enabled: yes

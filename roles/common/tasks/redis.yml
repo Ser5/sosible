@@ -1,0 +1,21 @@
+- name:   Redis
+  become: yes
+  tags:   redis
+  block:
+    - name: Install Redis
+      apt:
+        name:  [redis-server, redis-tools]
+        state: present
+
+    - name: Configure Redis
+      lineinfile:
+        path:   /etc/redis/redis.conf
+        regexp: "^{{ item.key }}\s"
+        line:   "{{ item.key }} {{ item.value }}"
+        state:  present
+      loop: "{{ data | dict2items }}"
+      vars:
+        data:
+          - save:             '""'
+          - maxmemory:        "{{ p.redis.maxmemory }}"
+          - maxmemory-policy: allkeys-lfu

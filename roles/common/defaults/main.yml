@@ -6,7 +6,8 @@ p:
     dir_path: /etc/php/7.4/
     config:
       post_max_size:   '32M'
-      default_charset: '""'
+      default_charset: ''
+      sendmail_path:   '/usr/sbin/exim4 -t'
   mysql:
     packages:
       - mariadb-server
@@ -32,6 +33,8 @@ p:
       #1 - тормоза и надёжность.
       #2 - летает и небольшая вероятность потери данных.
       innodb_flush_log_at_trx_commit: '2'
+  redis:
+    maxmemory: 1000mb
   git:
     user:
       name:  Ser5

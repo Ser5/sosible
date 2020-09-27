@@ -22,6 +22,7 @@
           post_max_size       = "{{ p.php.config.post_max_size }}"
           upload_max_filesize = "{{ p.php.config.post_max_size }}"
           default_charset     = "{{ p.php.config.default_charset }}"
+          sendmail_path       = "{{ p.php.config.sendmail_path }}"
         dest: /etc/php/custom.ini
 
     - name: Create symlinks to custom PHP config
