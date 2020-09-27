@@ -16,6 +16,6 @@
       loop: "{{ data | dict2items }}"
       vars:
         data:
-          - save:             '""'
-          - maxmemory:        "{{ p.redis.maxmemory }}"
-          - maxmemory-policy: allkeys-lfu
+          save:             '""'
+          maxmemory:        "{{ p.redis.maxmemory }}"
+          maxmemory-policy: allkeys-lfu
