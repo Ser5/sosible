@@ -26,6 +26,7 @@
     - {section: 'alias', option: 'amend',    value: 'commit --amend --cleanup=whitespace'}
     - {section: 'alias', option: 'amend-ne', value: 'commit --amend --no-edit --cleanup=whitespace'}
     - {section: 'alias', option: 'co',       value: 'checkout'}
+    - {section: 'alias', option: 'cor',      value: '!git checkout && git rebase master'}
     - {section: 'alias', option: 'copl',     value: '!git co $1 && git pull'}
     - {section: 'alias', option: 'com',      value: '!branchName=`git st | grep "%23 On branch" | sed "s/%23 On branch //"` && git copl $1 && git merge $branchName'}
     - {section: 'alias', option: 'l1',       value: 'log -n1'}
