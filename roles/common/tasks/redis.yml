@@ -10,7 +10,7 @@
     - name: Configure Redis
       lineinfile:
         path:   /etc/redis/redis.conf
-        regexp: "^{{ item.key }}\s"
+        regexp: '^{{ item.key }}\s'
         line:   "{{ item.key }} {{ item.value }}"
         state:  present
       loop: "{{ data | dict2items }}"
