@@ -13,4 +13,5 @@
 - import_tasks: nodejs.yml
 - import_tasks: pure-ftpd.yml
 - import_tasks: certbot.yml
+- import_tasks: jenkins.yml
 - import_tasks: duplicati.yml

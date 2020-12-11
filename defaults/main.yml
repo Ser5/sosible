@@ -47,5 +47,7 @@ p:
   certbot:
     install: no
     regru:   no
+  jenkins:
+    server_name: jenkins.example.com
   duplicati:
     version: '2.0.5.1-1'

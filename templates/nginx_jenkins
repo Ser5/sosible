@@ -1,0 +1,24 @@
+server {
+	listen      80;
+	server_name {{ p.jenkins.server_name }};
+
+	access_log /var/www/jaam/data/logs/jaam.ru.nginx.access.log;
+	error_log  /var/www/jaam/data/logs/jaam.ru.nginx.error.log error;
+
+	location / {
+		proxy_set_header        Host $host:$server_port;
+		proxy_set_header        X-Real-IP $remote_addr;
+		proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header        X-Forwarded-Proto $scheme;
+		
+		proxy_pass              http://127.0.0.1:8080;
+		proxy_read_timeout      90;
+		
+		proxy_redirect          http://127.0.0.1:8080 {{ p.jenkins.server_name }};
+		
+		proxy_http_version      1.1;
+		proxy_request_buffering off;
+
+		add_header 'X-SSH-Endpoint' '{{ p.jenkins.server_name }}' always;
+	}
+}
