@@ -44,9 +44,6 @@ p:
     user:
       name:  Ser5
       email: mail@example.com
-  certbot:
-    install: no
-    regru:   no
   jenkins:
     server_name: jenkins.example.com
   duplicati:
