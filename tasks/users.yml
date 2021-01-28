@@ -1,0 +1,11 @@
+- name:   Create users
+  become: yes
+  tags:   users
+  user:
+    name:  "{{ item.name }}"
+    uid:   "{{ item.uid   | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    home:  "{{ item.home  | default(omit) }}"
+    shell: /bin/bash
+  loop:
+    "{{ p.users }}"

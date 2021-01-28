@@ -11,6 +11,8 @@
 - import_tasks: php.yml
 - import_tasks: im.yml
 - import_tasks: nodejs.yml
+- import_tasks: groups.yml
+- import_tasks: users.yml
 - import_tasks: pure-ftpd.yml
 - import_tasks: certbot.yml
 - import_tasks: jenkins.yml

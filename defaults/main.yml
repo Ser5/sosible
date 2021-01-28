@@ -19,6 +19,8 @@ p:
       - mariadb-client
     config_path: /etc/mysql/mariadb.conf.d/50-server.cnf
     config:
+      #Чтобы всё работало нормально, а не через жопу
+      sql-mode:                       ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
       #Выключаем отголоски прошлого
       query_cache_size:               '0'
       #На серверах с малым количеством памяти включение настройки даст выжирание памяти в говнину
@@ -38,12 +40,18 @@ p:
       #1 - тормоза и надёжность.
       #2 - летает и небольшая вероятность потери данных.
       innodb_flush_log_at_trx_commit: '2'
+  mongodb:
+    org: no
   redis:
     maxmemory: 1000mb
   git:
     user:
       name:  Ser5
       email: mail@example.com
+  groups: []
+    #- {name: dude, gid: 1007}
+  users: []
+    #- {name: dude, uid: 1007, group: dude, home: /home/dude/}
   jenkins:
     server_name: jenkins.example.com
   duplicati:

@@ -1,6 +1,33 @@
 - name:   Install MongoDB
   become: yes
   tags:   mongodb
-  apt:
-    name:  [mongodb, php-mongodb]
-    state: present
+  block:
+
+    - name: Install from distro repository
+      when: not p.mongodb.org
+      apt:
+        name: [mongodb, php-mongodb]
+
+    - name: Install from mongodb.org
+      when: p.mongodb.org
+      block:
+
+        - name: Add key
+          apt_key:
+            url: https://www.mongodb.org/static/pgp/server-4.4.asc
+
+        - name: Add repository file
+          apt_repository:
+            repo:     deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main
+            filename: mongodb-org-4.4
+
+        - name: Install packages
+          apt:
+            name: [mongodb-org, php-mongodb]
+
+        - name: Start MongoDB
+          systemd:
+            name:          mongod
+            daemon_reload: yes
+            enabled:       yes
+            state:         started
