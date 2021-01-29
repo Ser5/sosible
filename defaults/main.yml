@@ -13,6 +13,10 @@ p:
         enable_cli:           0
         revalidate_freq:      0
         enable_file_override: 0
+    fpm:
+      pools: []
+        #Пути к файлам пулов, относительно плейбука - будут скопированы в /etc/php/x.x/fpm/pool.d/
+        #- host_templates/mysite.ru.conf
   mysql:
     packages:
       - mariadb-server

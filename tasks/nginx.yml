@@ -1,6 +1,18 @@
-- name: Install Nginx
+- name:   Nginx
   become: yes
   tags:   nginx
-  apt:
-    name:  nginx
-    state: present
+  block:
+
+    - name: Install Nginx
+      apt:
+        name:  nginx
+
+    - name: Configure fastcgi_params
+      template:
+        src:  fastcgi_params
+        dest: /etc/nginx/fastcgi_params
+
+    - name: Reload Nginx
+      service:
+        name:  nginx
+        state: reloaded

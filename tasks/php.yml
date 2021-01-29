@@ -26,6 +26,13 @@
         state: link
       loop: ['fpm', 'cli']
 
+    - name: Copy php-fpm pool files
+      template:
+        src:  "{{ playbook_dir }}/{{ item }}"
+        dest: "/etc/php/{{ p.php.version }}/fpm/pool.d/{{ item }}"
+      loop: "{{ p.php.fpm.pools }}"
+      when: (p.php.fpm.pools | length>0)
+
     - name: Restart php-fpm
       service:
         name:  "php{{ p.php.version }}-fpm"
