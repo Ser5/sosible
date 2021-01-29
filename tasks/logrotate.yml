@@ -1,0 +1,8 @@
+- name:   Rotating logs
+  become: yes
+  tags:   logrotate
+  template:
+    src:  "logrotate/{{ item.src }}"
+    dest: "/etc/logrotate.d/{{ item.dest }}"
+  when: (p.logrotate | length>0)
+  loop: "{{ p.logrotate }}"

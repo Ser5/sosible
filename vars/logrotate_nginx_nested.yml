@@ -1,0 +1,7 @@
+p:
+  logrotate:
+    - src:   nginx
+      dest:  nginx
+      paths: /var/www/*/logs/nginx/*.log
+
+#ansible-playbook site.yml --tags=logrotate --extra-vars='@host_vars/vars.yml' --extra-vars='@sosible/vars/logrotate_nginx_nested.yml'
