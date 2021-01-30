@@ -59,6 +59,16 @@ p:
   logrotate: []
     #Настройки вращения логов
     #- {src: nginx, dest: nginx, paths: '/var/log/nginx/*.log', rotate: 14, create: '0644 www-data adm'}
+  certbot:
+    email:     'mail@example.com'
+    domains:   []
+    challenge: webroot
+    webroot:   ''
+    #webroot или regru
+    regru:
+      login:    ''
+      password: ''
+      #   ansible-playbook site.yml --tags=certbot -e 'certbot.regru.login=vasya certbot.regru.password=123456'
   jenkins:
     server_name: jenkins.example.com
   duplicati:

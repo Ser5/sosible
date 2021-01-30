@@ -2,10 +2,35 @@
   become: yes
   tags:   certbot
   block:
-    - name: Install certbot with python 3
+    - name: Uninstall pip certbot
+      pip:
+        name:  certbot
+        state: absent
+
+    - name: Delete pip certbot file
+      file:
+        path:  /usr/local/bin/certbot
+        state: absent
+
+    - name: Install distro certbot
       apt:
-        name: [python3-pip, python3-certbot-nginx, certbot]
-        state: present
+        name: [python-pip, certbot]
+
+    - name: Symlink distro certbot to pip's
+      file:
+        src:   /usr/bin/certbot
+        path:  /usr/local/bin/certbot
+        state: link
+
+    - name: Upgrade python "security"
+      pip:
+        name:  security
+        state: latest
+
+    - name: Install python "parsedatetime" 2.5
+      pip:
+        name:    parsedatetime
+        version: 2.5
 
     - name: Install certbot-regru
       pip:
@@ -18,3 +43,24 @@
         owner: root
         group: root
         mode:  '0600'
+
+    - name: Put login/password into regru.ini
+      copy:
+        dest:    /etc/letsencrypt/regru.ini
+        content: |
+          certbot_regru:dns_username={{ p.certbot.regru.login }}
+          certbot_regru:dns_password={{ p.certbot.regru.password }}
+
+    - name:    Generate Nginx dhparam.pem
+      command: openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
+      args:
+        creates: /etc/nginx/ssl/dhparam.pem
+
+    - name: Put "certbot renew" to crontab
+      cron:
+        name:    'certbot renew'
+        minute:  '00'
+        hour:    '00'
+        day:     '*'
+        weekday: '1'
+        job:     'certbot renew && nginx -t && service nginx reload'
