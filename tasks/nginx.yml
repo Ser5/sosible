@@ -5,7 +5,7 @@
 
     - name: Install Nginx
       apt:
-        name:  nginx
+        name: nginx
 
     - name: Configure fastcgi_params
       template:
