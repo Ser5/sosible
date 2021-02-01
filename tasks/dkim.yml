@@ -1,0 +1,34 @@
+- name:   'Exim4: DKIM and SPF'
+  become: yes
+  tags:   dkim
+  vars:
+    keys_path:    /etc/exim4/dkim/
+    private_path: "{{ keys_path }}{{ p.dkim.name }}"
+    public_path:  "{{ private_path }}.pub"
+  block:
+
+    - name: Create directory for DKIM keys
+      file:
+        path:  "{{ keys_path }}"
+        state: directory
+
+    - name: Generate DKIM private key
+      command: "openssl genrsa -out {{ private_path }} 2048"
+      args:
+        creates: "{{ private_path }}"
+
+    - name: Generate DKIM public key
+      command: "openssl rsa -pubout -in {{ private_path }} -out {{ public_path }}"
+      args:
+        creates: "{{ public_path }}"
+
+    - name: Show DKIM TXT
+      debug:
+        msg:
+          - 'mail._domainkey...'
+          - "v=1; a=rsa-sha256; p={{ lookup('file', public_path) | replace('-----BEGIN PUBLIC KEY-----','') | replace('-----END PUBLIC KEY-----','') | replace('\n','') }}"
+
+    - name: Show SPF TXT
+      debug:
+        msg: "v=spf1 {% for e in p.spf.ip4 %}ip4:{{ e }} {% endfor %}{% for e in p.spf.a %}a:{{ e }} {% endfor %}{% for e in p.spf.include %}include:{{ e }} {% endfor %}~all"
+      when: (p.spf.ip4|length>0) or (p.spf.a|length>0) or (p.spf.include|length>0)

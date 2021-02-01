@@ -8,6 +8,7 @@
 - import_tasks: mongodb.yml
 - import_tasks: redis.yml
 - import_tasks: exim.yml
+- import_tasks: dkim.yml
 - import_tasks: php.yml
 - import_tasks: im.yml
 - import_tasks: nodejs.yml

@@ -59,6 +59,12 @@ p:
   logrotate: []
     #Настройки вращения логов
     #- {src: nginx, dest: nginx, paths: '/var/log/nginx/*.log', rotate: 14, create: '0644 www-data adm'}
+  dkim:
+    name: id_rsa
+  spf:
+    ip4:     []
+    a:       []
+    include: []
   certbot:
     email:     'mail@example.com'
     domains:   []
