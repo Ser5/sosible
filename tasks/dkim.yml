@@ -22,6 +22,17 @@
       args:
         creates: "{{ public_path }}"
 
+    - name: Add DKIM to Exim4 config
+      blockinfile:
+        path:         /etc/exim4/exim4.conf.template
+        insertbefore: '^remote_smtp:'
+        block: |
+          # DKIM:
+          DKIM_DOMAIN      = ${lc:${domain:$h_from:}}
+          DKIM_KEY_FILE    = {{ private_path }}
+          DKIM_PRIVATE_KEY = ${if exists{DKIM_KEY_FILE}{DKIM_KEY_FILE}{0}}
+          DKIM_SELECTOR    = mail
+
     - name: Show DKIM TXT
       debug:
         msg:
