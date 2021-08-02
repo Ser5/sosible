@@ -43,7 +43,7 @@
 
     - name: Copy php-fpm pool files
       template:
-        src:  "{{ playbook_dir }}/{{ item }}"
+        src:  "{{ playbook_dir }}/host_templates/{{ item }}"
         dest: "/etc/php/{{ p.php.version }}/fpm/pool.d/{{ item }}"
       loop: "{{ p.php.fpm.pools }}"
       when: (p.php.fpm.pools | length>0)
