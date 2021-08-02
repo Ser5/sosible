@@ -29,6 +29,11 @@
         src:  php.ini
         dest: /etc/php/custom.ini
 
+    - name: Create dir for FPM pools
+      file:
+        path:  "/etc/php/{{ p.php.version }}/fpm/pool.d/"
+        state: directory
+
     - name: Create symlinks to custom PHP config
       file:
         src:   /etc/php/custom.ini
