@@ -4,9 +4,9 @@
   block:
 
     - name:    Request certificate with certbot-regru
-      command: "certbot certonly -a certbot-regru:dns -m {{ p.certbot.email }} --no-eff-email -d {{ p.certbot.domains | join('-d ') }}"
+      command: "certbot certonly -a certbot-regru:dns -m {{ p.certbot.email }} --no-eff-email -d {{ p.certbot.domains | join(' -d ') }}"
       when:    p.certbot.challenge=='regru'
 
     - name:    Request certificate with webroot challenge
-      command: "certbot certonly --webroot --webroot-path={{ p.certbot.webroot }} -m {{ p.certbot.email }} --no-eff-email -d {{ p.certbot.domains | join('-d ') }}"
+      command: "certbot certonly --webroot --webroot-path={{ p.certbot.webroot }} -m {{ p.certbot.email }} --no-eff-email -d {{ p.certbot.domains | join(' -d ') }}"
       when:    p.certbot.challenge=='webroot'
