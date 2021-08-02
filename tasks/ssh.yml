@@ -9,7 +9,7 @@
         insertafter: ^Defaults
         line:        "Defaults\tenv_keep+=SSH_AUTH_SOCK"
         state:       present
-        validate:    '/usr/sbin/visudo -c'
+        validate:    '/usr/sbin/visudo -cf %s'
 
     - name: Configure sshd_config
       lineinfile:
