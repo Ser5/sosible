@@ -2,5 +2,5 @@
   become: yes
   tags:   basic
   apt:
-    name: [gnupg, acl, ftp, curl, ntp, screen, vim, python-lxml]
+    name: [sudo, man, gnupg, acl, ftp, curl, ntp, screen, vim, python-lxml]
     state: present
