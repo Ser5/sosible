@@ -5,7 +5,7 @@
 
     - name: Install PHP
       apt:
-        name:  "php{{ p.php.version }}",
+        name:  "php{{ p.php.version }}"
         state: present
 
     - name: Install PHP packages
