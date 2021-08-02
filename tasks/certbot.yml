@@ -2,6 +2,11 @@
   become: yes
   tags:   certbot
   block:
+
+    - name: Install Python 2 pip
+      apt:
+        name: python-pip
+
     - name: Uninstall pip certbot
       pip:
         name:  certbot
@@ -14,7 +19,7 @@
 
     - name: Install distro certbot
       apt:
-        name: [python-pip, certbot]
+        name: certbot
 
     - name: Symlink distro certbot to pip's
       file:
