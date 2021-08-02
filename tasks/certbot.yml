@@ -27,15 +27,15 @@
         path:  /usr/local/bin/certbot
         state: link
 
-    - name: Upgrade python "security"
+    - name: Upgrade python "cryptography"
       pip:
-        name:  security
+        name:  cryptography
         state: latest
 
     - name: Install python "parsedatetime" 2.5
       pip:
         name:    parsedatetime
-        version: 2.5
+        version: '2.5'
 
     - name: Install certbot-regru
       pip:
