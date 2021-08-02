@@ -2,16 +2,26 @@
   become: yes
   tags:   php
   block:
+
     - name: Install PHP
       apt:
-        name: [
-          php,
-          php-mbstring, php-curl, php-gd, php-zip, php-intl, php-xml, php-xmlrpc,
-          php-mysql, php-mongodb, php-redis,
-          php-igbinary, php-gmp, php-xdebug,
-          php-fpm,
-          composer
-        ]
+        name:  "php{{ p.php.version }}",
+        state: present
+
+    - name: Install PHP packages
+      apt:
+        name:  "php{{ p.php.version }}-{{ item }}"
+        state: present
+      loop: [
+        mbstring, curl, gd, zip, intl, xml, xmlrpc,
+        mysql, mongodb, redis,
+        igbinary, gmp, xdebug,
+        fpm
+      ]
+
+    - name: Install Composer
+      apt:
+        name:  composer
         state: present
 
     - name: Create custom PHP config
