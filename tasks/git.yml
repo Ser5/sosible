@@ -17,18 +17,14 @@
     - {section: 'user',  option: 'email',    value: "{{ p.git.user.email }}"}
     - {section: 'core',  option: 'editor',   value: 'mcedit'}
     - {section: 'color', option: 'ui',       value: 'true'}
-    - {section: 'push',  option: 'default',  value: 'current'}
     - {section: 'alias', option: 'st',       value: 'status'}
     - {section: 'alias', option: 'cst',      value: '!clear && git status'}
-    - {section: 'alias', option: 'ci',       value: 'commit --cleanup=whitespace'}
-    - {section: 'alias', option: 'cia',      value: '!git add . && git commit --cleanup=whitespace'}
-    - {section: 'alias', option: 'ci-a' ,    value: '!git add -A . && git commit --cleanup=whitespace'}
-    - {section: 'alias', option: 'amend',    value: 'commit --amend --cleanup=whitespace'}
-    - {section: 'alias', option: 'amend-ne', value: 'commit --amend --no-edit --cleanup=whitespace'}
+    - {section: 'alias', option: 'ci',       value: 'commit'}
+    - {section: 'alias', option: 'cia',      value: '!git add -A . && git commit'}
+    - {section: 'alias', option: 'amend',    value: 'commit --amend'}
+    - {section: 'alias', option: 'amend-ne', value: 'commit --amend --no-edit'}
     - {section: 'alias', option: 'co',       value: 'checkout'}
-    - {section: 'alias', option: 'cor',      value: '!git checkout $1 && git rebase master'}
-    - {section: 'alias', option: 'copl',     value: '!git co $1 && git pull'}
-    - {section: 'alias', option: 'com',      value: '!branchName=`git st | grep "%23 On branch" | sed "s/%23 On branch //"` && git copl $1 && git merge $branchName'}
+    - {section: 'alias', option: 'tg',       value: '!git tag -a $1 -m $1; git tag | tail -n 10;'}
     - {section: 'alias', option: 'l1',       value: 'log -n1'}
     - {section: 'alias', option: 'l2',       value: 'log -n2'}
     - {section: 'alias', option: 'l3',       value: 'log -n3'}
@@ -39,7 +35,6 @@
     - {section: 'alias', option: 'sm',       value: 'submodule'}
     - {section: 'alias', option: 'smu',      value: '!git submodule foreach git pull'}
     - {section: 'alias', option: 'unst',     value: 'reset HEAD'}
-    - {section: 'alias', option: 'devour',   value: '!sh -c "git co master && git merge $1 $2 && git branch -d $1" -'}
     - {section: 'alias', option: 'fc',       value: 'diff-tree --no-commit-id --name-status -r'}
     - {section: 'alias', option: 'pushb',    value: 'push origin HEAD'}
     - {section: 'alias', option: 'ra',       value: 'rebase --abort'}
