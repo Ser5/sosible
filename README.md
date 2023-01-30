@@ -1,16 +1,16 @@
 ## Ubuntu
 
-	apt update
-	apt install software-properties-common
-	apt-add-repository --yes --update ppa:ansible/ansible
-	apt install ansible
+	sudo apt update
+	sudo apt install software-properties-common
+	sudo apt-add-repository --yes --update ppa:ansible/ansible
+	sudo apt install ansible
 
 ## Debian
 
-	echo -e "\ndeb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main\n" >> /etc/apt/sources.list
-	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
-	apt update
-	apt install ansible
+	sudo echo -e "\ndeb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main\n" >> /etc/apt/sources.list
+	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
+	sudo apt update
+	sudo apt install ansible
 
 ## Config
 
@@ -18,11 +18,11 @@
 
 ## Download
 
-	apt install git
-	mkdir ansible
-	cd ansible/
+	sudo apt install git
+	mkdir ansible && cd ansible/
 	git clone https://github.com/Ser5/sosible/
 	echo -e "- name: Run\n  hosts: localhost\n\n  roles:\n    - role: sosible\n" > site.yml
+	mkdir host_vars && touch host_vars/vars.yml
 
 ## Run
 
