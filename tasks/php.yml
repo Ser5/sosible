@@ -15,7 +15,7 @@
       loop: [
         mbstring, curl, gd, zip, intl, xml, xmlrpc,
         mysql, mongodb, redis,
-        igbinary, gmp, xdebug,
+        igbinary, gmp,
         fpm
       ]
 

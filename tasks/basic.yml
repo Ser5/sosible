@@ -2,5 +2,5 @@
   become: yes
   tags:   basic
   apt:
-    name: [sudo, man, gnupg, acl, ftp, curl, ntp, screen, htop, vim, python-lxml, python3-lxml]
+    name:  [sudo, man, software-properties-common, gnupg2, curl, wget, ntp, screen, htop, vim, python3-lxml]
     state: present
