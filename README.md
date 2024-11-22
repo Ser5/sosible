@@ -47,6 +47,7 @@ mkdir host_vars && touch host_vars/vars.yml
 ## Run
 
 ```bash
+copy defaults/main.yml.example defaults/main.yml
 echo $'#!/bin/bash\n\nansible-playbook site.yml --extra-vars=\'@host_vars/vars.yml\' $@' > run
 chmod u+x run
 ./run --list-tags
