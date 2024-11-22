@@ -1,0 +1,29 @@
+- name:   UFW
+  become: yes
+  tags:   ufw
+  block:
+    - name: Install UFW
+      apt:
+        name:  ufw
+        state: present
+
+    - name: Deny all
+      ufw:
+        default: deny
+
+    - name: Allow standard ports
+      ufw:
+        port:  "{{ item }}"
+        proto: tcp
+        rule:  allow
+      loop: [80, 443, 21, 22]
+
+    - name: Allow ephemeral ports for pure-ftpd
+      ufw:
+        port:  '10000:10020'
+        proto: tcp
+        rule:  allow
+
+    - name: Restart UFW
+      ufw:
+        state: reloaded
