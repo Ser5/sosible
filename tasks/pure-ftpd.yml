@@ -18,9 +18,12 @@
         dest:    "/etc/pure-ftpd/conf/{{ item.name }}"
       loop:
         - {name: 'ChrootEveryone',     value: 'yes'}
+        - {name: 'FSCharset',          value: 'UTF-8'}
+        - {name: 'MinUID',             value: '1000'}
         - {name: 'NoAnonymous',        value: 'yes'}
         - {name: 'PAMAuthentication',  value: 'no'}
         - {name: 'UnixAuthentication', value: 'no'}
+        - {name: 'PassivePortRange',   value: '10000 10020'}
         - {name: 'PureDB',             value: '/etc/pure-ftpd/pureftpd.pdb'}
 
     - name: Create pure auth symlink
