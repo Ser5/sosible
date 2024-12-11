@@ -1,0 +1,79 @@
+p:
+  ssh:
+    password_authentication: 'yes'
+  php:
+    version:  '8.3'
+    dir_path: /etc/php/8.3/
+    config:
+      post_max_size:   '32M'
+      default_charset: ''
+      sendmail_path:   '/usr/sbin/exim4 -t'
+      opcache:
+        enable:               1
+        enable_cli:           0
+        revalidate_freq:      0
+        enable_file_override: 0
+    fpm:
+      pools: []
+        #Пути к файлам пулов, относительно плейбука - будут скопированы в /etc/php/x.x/fpm/pool.d/
+        #- host_templates/mysite.ru.conf
+  mysql:
+    packages:
+      - mariadb-server
+      - mariadb-client
+    config_path: /etc/mysql/mariadb.conf.d/50-server.cnf
+    config:
+      #Чтобы всё работало нормально, а не через жопу
+      sql-mode:                       ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+      #Выключаем отголоски прошлого
+      query_cache_size:               '0'
+      #На серверах с малым количеством памяти включение настройки даст выжирание памяти в говнину
+      performance_schema:             '0'
+      #На каждую таблицу по одному файлу. Если так не указывать - будет жрать место на винте.
+      innodb_file_per_table:          '1'
+      #На продакшоне якобы лучше ставить в 70-80% доступной памяти сервера - там кэш всех данных и индексов
+      innodb_buffer_pool_size:        '128M'
+      #На каждый гигобайт innodb_buffer_pool_size делаем по одному буферу
+      innodb_buffer_pool_instances:   '1'
+      #Это лог операций. Чем больше размер лога - тем быстрее работает БД.
+      #Файлов лога два - соответственно на диске нужно (2 * innodb_log_file_size) места.
+      innodb_log_file_size:           '512M'
+      #Размер буфера незакоммиченных транзакций. Вполне хватит стандартного 1 МБ.
+      #Поднимать имеет смысл если используются толстые TEXT и BLOB.
+      innodb_log_buffer_size:         '1M'
+      #1 - тормоза и надёжность.
+      #2 - летает и небольшая вероятность потери данных.
+      innodb_flush_log_at_trx_commit: '2'
+  mongodb:
+    org: no
+  redis:
+    maxmemory: 1000mb
+  git:
+    user:
+      name:  Ser5
+      email: mail@example.com
+  groups: []
+    #- {name: dude, gid: 1007}
+  users: []
+    #- {name: dude, uid: 1007, group: dude, home: /home/dude/}
+  logrotate: []
+    #Настройки вращения логов
+    #- {src: nginx, dest: nginx, paths: '/var/log/nginx/*.log', rotate: 14, create: '0644 www-data adm'}
+  dkim:
+    name: id_rsa
+  spf:
+    ip4:     []
+    a:       []
+    include: []
+  acmesh:
+    email:   'mail@example.com'
+    domains:
+      - {name: domain1.ru, list: '-d domain1.ru -d *.domain1.ru'}
+    regru:
+      login:    ''
+      password: ''
+      #   ansible-playbook site.yml --tags=acmesh -e 'p.acmesh.regru.login=vasya p.acmesh.regru.password=123456'
+  jenkins:
+    server_name: jenkins.example.com
+  duplicati:
+    version: '2.0.5.1-1'

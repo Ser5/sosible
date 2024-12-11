@@ -1,7 +1,7 @@
 ## Ubuntu 22, Debian 11
 
 ```bash
-sudo sudo gpg --no-default-keyring --keyring /usr/share/keyrings/ansible-keyring.gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
+sudo gpg --no-default-keyring --keyring /usr/share/keyrings/ansible-keyring.gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
 sudo echo -e "\ndeb [signed-by=/usr/share/keyrings/ansible-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu focal main\n" >> /etc/apt/sources.list.d/ansible.list
 sudo apt update
 sudo apt install ansible -y
@@ -47,7 +47,7 @@ mkdir host_vars && touch host_vars/vars.yml
 ## Run
 
 ```bash
-copy defaults/main.yml.example defaults/main.yml
+cp defaults/main.example.yml defaults/main.yml
 echo $'#!/bin/bash\n\nansible-playbook site.yml --extra-vars=\'@host_vars/vars.yml\' $@' > run
 chmod u+x run
 ./run --list-tags
