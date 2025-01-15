@@ -1,6 +1,7 @@
 ## Ubuntu 22, Debian 11
 
 ```bash
+gpg --list-keys
 sudo gpg --no-default-keyring --keyring /usr/share/keyrings/ansible-keyring.gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
 sudo echo -e "\ndeb [signed-by=/usr/share/keyrings/ansible-keyring.gpg] http://ppa.launchpad.net/ansible/ansible/ubuntu focal main\n" >> /etc/apt/sources.list.d/ansible.list
 sudo apt update
